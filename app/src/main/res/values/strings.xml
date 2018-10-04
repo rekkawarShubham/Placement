@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Placement</string>
+    <string name="company">Company</string>
+    <string name="add_company">Add Company</string>
+    <string name="student_applied">Applied Students</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_add_company">AddCompany</string>
+    <string name="get_all_companies">Companies</string>
+    <string name="get_my_profile">Profile</string>
+    <string name="apply_to_company">Apply</string>
+</resources>
