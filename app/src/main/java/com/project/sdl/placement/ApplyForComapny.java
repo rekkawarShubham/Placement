@@ -1,8 +1,10 @@
 package com.project.sdl.placement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -78,6 +80,8 @@ public class ApplyForComapny extends AppCompatActivity {
 
     private void applyToCompany() {
 
+        double marks = 8.5;
+        double sgpa1;
         final String prnno = textViewprn.getText().toString().trim();
         final String seatno = textViewseat.getText().toString().trim();
         final String sgpa = textViewsgpa.getText().toString().trim();
@@ -85,6 +89,7 @@ public class ApplyForComapny extends AppCompatActivity {
         final String skills = editTextskill.getText().toString().trim();
         final String questions = editTextquestion.getText().toString().trim();
         //first we will do the validations
+        sgpa1 = Double.parseDouble(sgpa);
 
         if (TextUtils.isEmpty(prnno)) {
             textViewprn.setError("Please enter username");
@@ -116,33 +121,46 @@ public class ApplyForComapny extends AppCompatActivity {
             return;
         }
 
-        db = FirebaseFirestore.getInstance();
-        Map<String,String> appliedstudentmap= new HashMap<>();
-        appliedstudentmap.put("PRN_NO",prnno);
-        appliedstudentmap.put("seat_no",seatno);
-        appliedstudentmap.put("SGPA",sgpa);
-        appliedstudentmap.put("mother_name",mothername);
-        appliedstudentmap.put("skills",skills);
-        appliedstudentmap.put("question",questions);
+        if(sgpa1 >= marks) {
+            db = FirebaseFirestore.getInstance();
+            Map<String, String> appliedstudentmap = new HashMap<>();
+            appliedstudentmap.put("PRN_NO", prnno);
+            appliedstudentmap.put("seat_no", seatno);
+            appliedstudentmap.put("SGPA", sgpa);
+            appliedstudentmap.put("mother_name", mothername);
+            appliedstudentmap.put("skills", skills);
+            appliedstudentmap.put("question", questions);
 
 
+            db.collection("Applied_Student").document(username).set(appliedstudentmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(ApplyForComapny.this, "Applied", Toast.LENGTH_LONG).show();
+                    } else {
+                        Exception err = task.getException();
+                        Toast.makeText(ApplyForComapny.this, "Cannot Apply" + err, Toast.LENGTH_LONG).show();
+                    }
 
-        db.collection("Applied_Student").document(username).set(appliedstudentmap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task)
-            {
-                if(task.isSuccessful())
-                {
-                    Toast.makeText(ApplyForComapny.this,"Applied",Toast.LENGTH_LONG).show();
                 }
-                else
-                {
-                    Exception err=task.getException();
-                    Toast.makeText(ApplyForComapny.this,"Cannot Apply"+err,Toast.LENGTH_LONG).show();
-                }
+            });
+        }
+        else {
 
-            }
-        });
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage("Your SGPA is Less than Criteria");
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
 
     }
 

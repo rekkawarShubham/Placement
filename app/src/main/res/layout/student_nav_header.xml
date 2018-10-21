@@ -11,15 +11,16 @@
 
     <ImageView
         android:id="@+id/student_profile"
-        android:layout_width="match_parent"
+        android:layout_width="192dp"
         android:layout_height="144dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
+        android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal_background" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/student_username"
+        android:gravity="center"
+        android:layout_width="156dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

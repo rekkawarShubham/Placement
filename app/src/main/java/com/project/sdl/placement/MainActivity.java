@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
     public class MainActivity extends AppCompatActivity {
@@ -18,6 +20,7 @@ import android.widget.Toast;
     private DrawerLayout mDrawerLayout;
     String username,password;
     Intent i;
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,11 @@ import android.widget.Toast;
         );
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View header=navigationView.getHeaderView(0);
+
+        imageView =(ImageView)header.findViewById(R.id.officer_profle);
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.businessman));
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

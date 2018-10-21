@@ -94,7 +94,6 @@ public class TextExtract extends AppCompatActivity implements View.OnClickListen
         Resources r= this.getResources();
 //        Bitmap bitmap = BitmapFactory.decodeResource(r,R.drawable.p1);
         Bitmap bitmap = ((BitmapDrawable)i1.getDrawable()).getBitmap();
-
         TextRecognizer textRecognizer = new  TextRecognizer.Builder(getApplicationContext()).build();
 
         if(!textRecognizer.isOperational())

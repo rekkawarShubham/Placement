@@ -1,6 +1,8 @@
 package com.project.sdl.placement;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,15 +11,22 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 public class StudentActivity extends AppCompatActivity {
@@ -26,6 +35,8 @@ public class StudentActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     String username,password,user,pass;
     Intent i;
+    ImageView imageView;
+    TextView t1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,7 @@ public class StudentActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         username = extras.getString("username");
         password = extras.getString("password");
+
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerLayout.addDrawerListener(
@@ -67,7 +79,33 @@ public class StudentActivity extends AppCompatActivity {
                 }
         );
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view1);
+        View header=navigationView.getHeaderView(0);
+        t1 = (TextView)header.findViewById(R.id.student_username);
+        t1.setText(username);
+        imageView =(ImageView)header.findViewById(R.id.student_profile);
+        StorageReference mImageRef =
+                FirebaseStorage.getInstance().getReference(username+"/"+"ProfilePhoto");
+        final long ONE_MEGABYTE = 1024 * 1024;
+        mImageRef.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        DisplayMetrics dm = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+                        imageView.setMinimumHeight(dm.heightPixels);
+                        imageView.setMinimumWidth(dm.widthPixels);
+                        imageView.setImageBitmap(bm);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -102,9 +140,6 @@ public class StudentActivity extends AppCompatActivity {
                                                         extras.putString("password", password);
                                                         i.putExtras(extras);
                                                         startActivity(i);
-                                                        Toast.makeText(StudentActivity.this, "Welcome" + username + password, Toast.LENGTH_LONG).show();
-                                                    } else {
-                                                        Toast.makeText(StudentActivity.this, "Invalid " + username + password, Toast.LENGTH_LONG).show();
                                                     }
                                                 }
                                             } else {

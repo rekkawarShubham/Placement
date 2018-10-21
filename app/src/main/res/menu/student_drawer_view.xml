@@ -11,7 +11,7 @@
             android:title="@string/get_my_profile" />
         <item
             android:id="@+id/apply"
-            android:icon="@drawable/ic_menu"
+            android:icon="@drawable/ic_apply"
             android:title="@string/apply_to_company" />
         <item
             android:id="@+id/logout"

@@ -94,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 user = document.getString("Username");
                                 pass = document.getString("Password");
                                 if(user.equalsIgnoreCase(username) && pass.equalsIgnoreCase(password)) {
-                                    Toast.makeText(ProfileActivity.this, "Success", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ProfileActivity.this, "Your Profile", Toast.LENGTH_LONG).show();
                                     textViewEmail.setText(document.getString("Email"));
                                     textViewUsername.setText(document.getString("Username"));
                                     textViewGender.setText(document.getString("Gender"));
@@ -108,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
                 });
 
     }
+
     public void getProfile(String username)
     {
         StorageReference mImageRef =

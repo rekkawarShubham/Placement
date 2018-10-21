@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/textViewComapanyName"
                 android:layout_alignParentStart="true"
-                android:text="Compnay Name :"
+                android:text="Company Name:"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
         </RelativeLayout>

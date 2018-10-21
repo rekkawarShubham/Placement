@@ -166,6 +166,7 @@ public class RegisterStudent extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(RegisterStudent.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterStudent.this,LoginActivity.class));
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

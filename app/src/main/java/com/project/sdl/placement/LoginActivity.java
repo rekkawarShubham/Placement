@@ -1,8 +1,10 @@
 package com.project.sdl.placement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -38,9 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
-
-        //if user presses on login
-        //calling the method login
         findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                                         extras.putString("password", password);
                                         i.putExtras(extras);
                                         startActivity(i);
-                                        Toast.makeText(LoginActivity.this, "Welcome" + username + password, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(LoginActivity.this, "Welcome " + username, Toast.LENGTH_LONG).show();
                                     }
                                 }
                             } else {
@@ -121,8 +120,6 @@ public class LoginActivity extends AppCompatActivity {
         if(keyCode== KeyEvent.KEYCODE_BACK)
             Toast.makeText(getApplicationContext(), "back press",
                     Toast.LENGTH_LONG).show();
-
         return false;
-        // Disable back button..............
     }
 }
